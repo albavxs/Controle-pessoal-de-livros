@@ -1,8 +1,8 @@
 # Use a versão oficial do Node.js como base
-FROM node:14
+FROM node:20
 
 # Definir diretório de trabalho dentro do contêiner
-WORKDIR /app
+WORKDIR /Back-end
 
 # Copiar package.json e package-lock.json para instalar dependências
 COPY package*.json ./
