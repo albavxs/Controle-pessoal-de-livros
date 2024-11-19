@@ -1,0 +1,10 @@
+version: '3'
+services:
+  app:
+    build: .
+    container_name: Controle-do-back
+    ports:
+      - "3001:3001"  # Exemplo de mapeamento de porta
+    volumes:
+      - .:/app
+    command: ["npm", "start"]

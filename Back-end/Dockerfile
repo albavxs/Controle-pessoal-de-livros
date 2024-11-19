@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Expor a porta do servidor (ajuste conforme necessário, ex: porta 5000)
-EXPOSE 3000
+EXPOSE 3001
 
 
 CMD ["npm", "start"]
