@@ -1,6 +1,24 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "Controle-PessoalFE/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "build" }
+    },
+    {
+      "src": "Back-end/app.js",
+      "use": "@vercel/node"
+    }
+  ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/Controle-PessoalFE/$1" }
+    {
+      "source": "/api/(.*)",
+      "destination": "Back-end/app.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "Controle-PessoalFE/$1"
+    }
   ]
 }
