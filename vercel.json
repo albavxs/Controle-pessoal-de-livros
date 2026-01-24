@@ -1,13 +1,7 @@
 {
   "version": 2,
   "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/Back-end/app.js"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/Controle-PessoalFE/$1"
-    }
+    { "source": "/api/(.*)", "destination": "/Back-end/app.js" },
+    { "source": "/(.*)", "destination": "/Controle-PessoalFE/$1" }
   ]
 }
