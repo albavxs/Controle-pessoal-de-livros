@@ -2,7 +2,7 @@ module.exports = {
   development: {
     client: "sqlite3",
     connection: {
-      filename: "./data/editora.db3",
+      filename: require('path').resolve(__dirname, './data/editora.db3'),
     },
     useNullAsDefault: true,
     migrations: {
