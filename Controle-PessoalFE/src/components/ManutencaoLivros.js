@@ -63,12 +63,12 @@ const ManutencaoLivros = () => {
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-sm-7">
-          <h4 className="fst-italic mt-3">Manutenção</h4>
+    <div className="container-fluid px-3 px-sm-4">
+      <div className="row g-3 mb-3">
+        <div className="col-12 col-lg-7">
+          <h4 className="fst-italic mt-3 mb-0">Manutenção</h4>
         </div>
-        <div className="col-sm-5">
+        <div className="col-12 col-lg-5">
           <form onSubmit={handleSubmit(filtrarLista)}>
             <div className="input-group mt-3">
               <input
@@ -97,34 +97,36 @@ const ManutencaoLivros = () => {
         </div>
       </div>
 
-      <table className="table table-striped mt-3">
-        <thead>
-          <tr>
-            <th>Cód.</th>
-            <th>Título</th>
-            <th>Autor</th>
-            <th>Ano</th>
-            <th>Preço R$</th>
-            <th>Foto</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {livros.map((livro, index) => (
-            <ItemLista
-              key={livro.id}
-              id={livro.id}
-              titulo={livro.titulo}
-              autor={livro.autor}
-              ano={livro.ano}
-              preco={livro.preco}
-              foto={livro.foto}
-              excluirClick={() => excluir(livro.id, livro.titulo)}
-              alterarClick={() => alterar(livro.id, livro.titulo, index)}
-            />
-          ))}
-        </tbody>
-      </table>
+      <div className="table-responsive">
+        <table className="table table-striped mt-3 table-hover">
+          <thead>
+            <tr>
+              <th className="d-none d-sm-table-cell">Cód.</th>
+              <th>Título</th>
+              <th className="d-none d-md-table-cell">Autor</th>
+              <th className="d-none d-lg-table-cell">Ano</th>
+              <th className="d-none d-md-table-cell">Preço R$</th>
+              <th className="d-none d-lg-table-cell">Foto</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {livros.map((livro, index) => (
+              <ItemLista
+                key={livro.id}
+                id={livro.id}
+                titulo={livro.titulo}
+                autor={livro.autor}
+                ano={livro.ano}
+                preco={livro.preco}
+                foto={livro.foto}
+                excluirClick={() => excluir(livro.id, livro.titulo)}
+                alterarClick={() => alterar(livro.id, livro.titulo, index)}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,197 @@
+/* Estilos globais responsivos */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  min-height: calc(100vh - 56px);
+}
+
+/* Melhorias de responsividade para containers */
+.container-fluid {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (max-width: 576px) {
+  .container-fluid {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  h4 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Melhorias para formulários */
+.form-control,
+.form-select {
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+}
+
+@media (max-width: 576px) {
+  .form-control,
+  .form-select {
+    font-size: 16px; /* Evita zoom automático em iOS */
+    padding: 0.75rem;
+  }
+}
+
+/* Melhorias para botões */
+.btn {
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 576px) {
+  .btn {
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .btn-lg {
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* Melhorias para alertas */
+.alert {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 576px) {
+  .alert {
+    font-size: 0.875rem;
+    padding: 0.75rem;
+  }
+}
+
+/* Melhorias para tabelas */
+.table {
+  font-size: 0.95rem;
+}
+
+.table-responsive {
+  border-radius: 0.25rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 576px) {
+  .table {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .table thead th {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.75rem;
+  }
+  
+  .table tbody td {
+    padding: 0.5rem 0.25rem;
+  }
+}
+
+/* Melhorias para input groups */
+.input-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.input-group .form-control,
+.input-group .btn {
+  flex: 1;
+  min-width: 100px;
+}
+
+@media (max-width: 576px) {
+  .input-group {
+    gap: 0.25rem;
+  }
+  
+  .input-group .form-control,
+  .input-group .btn {
+    min-width: 80px;
+    font-size: 0.875rem;
+  }
+}
+
+/* Melhorias para badges */
+.badge {
+  font-size: 0.9rem;
+  padding: 0.35em 0.65em;
+}
+
+@media (max-width: 576px) {
+  .badge {
+    font-size: 0.8rem;
+    padding: 0.25em 0.5em;
+  }
+}
+
+/* Melhorias para imagens responsivas */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Melhorias para espaçamento responsivo */
+@media (max-width: 576px) {
+  .mt-3 { margin-top: 0.75rem !important; }
+  .mb-3 { margin-bottom: 0.75rem !important; }
+  .mb-4 { margin-bottom: 1rem !important; }
+  .p-3 { padding: 0.75rem !important; }
+  .py-4 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+}
+
+/* Melhorias para navegação */
+.navbar {
+  padding: 0.5rem 0;
+}
+
+.navbar-brand {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+@media (max-width: 576px) {
+  .navbar-brand {
+    font-size: 0.95rem;
+  }
+  
+  .nav-link {
+    padding: 0.5rem 0 !important;
+  }
+}
+
+/* Melhorias para acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

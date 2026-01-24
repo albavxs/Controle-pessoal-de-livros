@@ -1,1 +1,25 @@
-.exclui, .altera { cursor: pointer; }
+.exclui, .altera { 
+  cursor: pointer; 
+}
+
+/* Responsividade para tabelas */
+@media (max-width: 576px) {
+  table {
+    font-size: 0.875rem;
+  }
+  
+  table td {
+    padding: 0.5rem 0.25rem;
+  }
+  
+  table img {
+    max-width: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  table th,
+  table td {
+    padding: 0.5rem;
+  }
+}

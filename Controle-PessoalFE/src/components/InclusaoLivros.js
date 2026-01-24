@@ -37,11 +37,13 @@ const InclusaoLivros = () => {
   };
 
   return (
-    <div className="container">
-      <h4 className="fst-italic mt-3">Inclusão</h4>
+    <div className="container-fluid px-3 px-sm-4">
+      <h4 className="fst-italic mt-3 mb-4">Inclusão</h4>
       <form onSubmit={handleSubmit(salvar)}>
-        <div className="form-group">
-          <label htmlFor="titulo">Título:</label>
+        <div className="form-group mb-3">
+          <label htmlFor="titulo" className="form-label">
+            Título:
+          </label>
           <input
             type="text"
             className="form-control"
@@ -51,12 +53,16 @@ const InclusaoLivros = () => {
             {...register("titulo", { required: "Título é obrigatório" })}
           />
           {errors.titulo && (
-            <span className="text-danger">{errors.titulo.message}</span>
+            <span className="text-danger small d-block mt-1">
+              {errors.titulo.message}
+            </span>
           )}
         </div>
 
-        <div className="form-group mt-2">
-          <label htmlFor="autor">Autor:</label>
+        <div className="form-group mb-3">
+          <label htmlFor="autor" className="form-label">
+            Autor:
+          </label>
           <input
             type="text"
             className="form-control"
@@ -65,12 +71,16 @@ const InclusaoLivros = () => {
             {...register("autor", { required: "Autor é obrigatório" })}
           />
           {errors.autor && (
-            <span className="text-danger">{errors.autor.message}</span>
+            <span className="text-danger small d-block mt-1">
+              {errors.autor.message}
+            </span>
           )}
         </div>
 
-        <div className="form-group mt-2">
-          <label htmlFor="foto">URL da Foto:</label>
+        <div className="form-group mb-3">
+          <label htmlFor="foto" className="form-label">
+            URL da Foto:
+          </label>
           <input
             type="url"
             className="form-control"
@@ -79,14 +89,18 @@ const InclusaoLivros = () => {
             {...register("foto", { required: "URL da foto é obrigatória" })}
           />
           {errors.foto && (
-            <span className="text-danger">{errors.foto.message}</span>
+            <span className="text-danger small d-block mt-1">
+              {errors.foto.message}
+            </span>
           )}
         </div>
 
-        <div className="row mt-2">
-          <div className="col-sm-4">
+        <div className="row g-3 mb-3">
+          <div className="col-12 col-sm-6 col-md-4">
             <div className="form-group">
-              <label htmlFor="ano">Ano de Publicação:</label>
+              <label htmlFor="ano" className="form-label">
+                Ano de Publicação:
+              </label>
               <input
                 type="number"
                 className="form-control"
@@ -95,13 +109,17 @@ const InclusaoLivros = () => {
                 {...register("ano", { required: "Ano é obrigatório" })}
               />
               {errors.ano && (
-                <span className="text-danger">{errors.ano.message}</span>
+                <span className="text-danger small d-block mt-1">
+                  {errors.ano.message}
+                </span>
               )}
             </div>
           </div>
-          <div className="col-sm-8">
+          <div className="col-12 col-sm-6 col-md-8">
             <div className="form-group">
-              <label htmlFor="preco">Preço R$:</label>
+              <label htmlFor="preco" className="form-label">
+                Preço R$:
+              </label>
               <input
                 type="number"
                 className="form-control"
@@ -111,35 +129,51 @@ const InclusaoLivros = () => {
                 {...register("preco", { required: "Preço é obrigatório" })}
               />
               {errors.preco && (
-                <span className="text-danger">{errors.preco.message}</span>
+                <span className="text-danger small d-block mt-1">
+                  {errors.preco.message}
+                </span>
               )}
             </div>
           </div>
         </div>
 
-        <button
-          type="submit"
-          className="btn btn-primary my-3"
-          disabled={carregando}
-        >
-          {carregando ? "Enviando..." : "Enviar"}
-        </button>
-        <button type="reset" className="btn btn-danger my-3 ms-3">
-          Limpar
-        </button>
+        <div className="d-flex flex-wrap gap-2 mb-3">
+          <button
+            type="submit"
+            className="btn btn-primary flex-grow-1"
+            style={{ minWidth: "120px" }}
+            disabled={carregando}
+          >
+            {carregando ? "Enviando..." : "Enviar"}
+          </button>
+          <button
+            type="reset"
+            className="btn btn-danger flex-grow-1"
+            style={{ minWidth: "120px" }}
+          >
+            Limpar
+          </button>
+        </div>
       </form>
 
       {aviso && (
         <div
           className={
             aviso.startsWith("Ok!")
-              ? "alert alert-success"
+              ? "alert alert-success alert-dismissible fade show"
               : aviso.startsWith("Erro")
-              ? "alert alert-danger"
+              ? "alert alert-danger alert-dismissible fade show"
               : ""
           }
+          role="alert"
         >
           {aviso}
+          <button
+            type="button"
+            className="btn-close"
+            onClick={() => setAviso("")}
+            aria-label="Close"
+          ></button>
         </div>
       )}
     </div>
