@@ -1,0 +1,12 @@
+{
+  "name": "controle-pessoal-de-livros",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install:frontend": "cd Controle-PessoalFE && npm install",
+    "install:backend": "cd Back-end && npm install",
+    "build:frontend": "cd Controle-PessoalFE && npm run build",
+    "build": "npm run install:frontend && npm run build:frontend",
+    "start": "cd Controle-PessoalFE && npm start"
+  }
+}
