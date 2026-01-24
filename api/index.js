@@ -8,10 +8,10 @@ app.use(cors());
 
 // No Vercel, as funções na pasta /api já são mapeadas para /api
 // Redirecionamos as rotas para o arquivo de livros
-app.use("/livros", routes);
+app.use("/api/livros", routes);
 
 // Rota base para teste
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
     res.json({ status: "API Online", message: "Controle de Livros API" });
 });
 
