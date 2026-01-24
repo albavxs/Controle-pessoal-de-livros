@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
+      "src": "Controle-PessoalFE/package.json",
       "use": "@vercel/static-build",
       "config": { "distDir": "build" }
     }
@@ -10,11 +10,11 @@
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/static/$1"
+      "dest": "Controle-PessoalFE/static/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "Controle-PessoalFE/index.html"
     }
   ]
 }
