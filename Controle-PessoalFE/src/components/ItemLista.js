@@ -1,39 +1,72 @@
-import "./ItemLista.css";
-
-const ItemLista = ({id, titulo, autor, ano, preco, foto, excluirClick, alterarClick}) => {  
+const ItemLista = ({
+  id,
+  titulo,
+  autor,
+  ano,
+  preco,
+  foto,
+  excluirClick,
+  alterarClick,
+}) => {
   return (
     <tr>
-      <td className="d-none d-sm-table-cell">{id}</td>
-      <td>
-        <div className="fw-bold">{titulo}</div>
-        <div className="d-md-none small text-muted">{autor}</div>
-        <div className="d-md-none small text-muted">R$ {Number(preco).toLocaleString("pt-br", {minimumFractionDigits: 2})}</div>
-      </td>
-      <td className="d-none d-md-table-cell">{autor}</td>
-      <td className="d-none d-lg-table-cell">{ano}</td>
-      <td className="d-none d-md-table-cell text-end">
-        {Number(preco).toLocaleString("pt-br", {minimumFractionDigits: 2})}
-      </td>
-      <td className="d-none d-lg-table-cell text-center">
-        <img src={foto} alt="Capa do Livro" width="40" height="auto" className="img-fluid" />
-      </td>
-      <td className="text-center">
-        <button 
-          className="btn btn-sm btn-outline-danger me-1"
-          title="Excluir"
-          onClick={excluirClick}
-          aria-label="Excluir livro"
+      <td className="ps-4 py-3">
+        <div 
+          style={{ 
+            width: "60px", 
+            height: "85px", 
+            backgroundColor: "#f8f9fa",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "0.7rem",
+            textAlign: "center",
+            color: "#6c757d"
+          }} 
+          className="rounded shadow-sm border overflow-hidden"
         >
-          <i>&#10008;</i>
-        </button>
-        <button 
-          className="btn btn-sm btn-outline-success"
-          title="Alterar preço"
-          onClick={alterarClick}
-          aria-label="Alterar preço do livro"
-        >
-          <i>&#36;</i>
-        </button>
+          {foto ? (
+            <img 
+              src={foto} 
+              alt={titulo} 
+              style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+              onError={(e) => {
+                e.target.onerror = null; 
+                e.target.src = "https://via.placeholder.com/60x85?text=Livro";
+              }}
+            />
+          ) : (
+            <span>Sem Capa</span>
+          )}
+        </div>
+      </td>
+      <td className="py-3">
+        <div className="fw-bold text-dark" style={{ fontSize: "1.05rem" }}>{titulo}</div>
+        <div className="text-muted small">{autor}</div>
+      </td>
+      <td className="py-3 d-none d-md-table-cell">
+        <span className="badge bg-light text-dark border fw-normal">{ano}</span>
+      </td>
+      <td className="py-3 fw-bold text-primary">
+        {Number(preco).toLocaleString("pt-br", { style: "currency", currency: "BRL" })}
+      </td>
+      <td className="py-3 text-center pe-4">
+        <div className="btn-group btn-group-sm">
+          <button 
+            className="btn btn-outline-warning" 
+            title="Alterar Preço"
+            onClick={alterarClick}
+          >
+            Editar
+          </button>
+          <button 
+            className="btn btn-outline-danger" 
+            title="Excluir Livro"
+            onClick={excluirClick}
+          >
+            Excluir
+          </button>
+        </div>
       </td>
     </tr>
   );

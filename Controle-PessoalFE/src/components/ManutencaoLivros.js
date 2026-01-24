@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { inAxios } from "../config_axios";
 import { useForm } from "react-hook-form";
-
 import ItemLista from "./ItemLista";
 
 const ManutencaoLivros = () => {
@@ -13,11 +12,11 @@ const ManutencaoLivros = () => {
       const lista = await inAxios.get("livros");
       setLivros(lista.data);
     } catch (error) {
+      console.error(error);
       alert(`Erro... Não foi possível obter os dados: ${error}`);
     }
   };
 
-  // define o método que será executado assim que o componente for renderizado
   useEffect(() => {
     obterLista();
   }, []);
@@ -63,69 +62,77 @@ const ManutencaoLivros = () => {
   };
 
   return (
-    <div className="container-fluid px-3 px-sm-4">
-      <div className="row g-3 mb-3">
-        <div className="col-12 col-lg-7">
-          <h4 className="fst-italic mt-3 mb-0">Manutenção</h4>
-        </div>
-        <div className="col-12 col-lg-5">
-          <form onSubmit={handleSubmit(filtrarLista)}>
-            <div className="input-group mt-3">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Título ou autor"
-                required
-                {...register("palavra")}
-              />
-              <input
-                type="submit"
-                className="btn btn-primary"
-                value="Pesquisar"
-              />
-              <input
-                type="button"
-                className="btn btn-danger"
-                value="Todos"
-                onClick={() => {
-                  reset({ palavra: "" });
-                  obterLista();
-                }}
-              />
+    <div className="container mt-4">
+      <div className="card shadow-sm border-0">
+        <div className="card-header bg-white border-0 pt-4 pb-3">
+          <div className="row align-items-center g-3">
+            <div className="col-12 col-lg-6">
+              <h3 className="fw-bold text-primary mb-0">Hub de Manutenção</h3>
+              <p className="text-muted small mb-0">Gerencie seu acervo pessoal de livros</p>
             </div>
-          </form>
+            <div className="col-12 col-lg-6">
+              <form onSubmit={handleSubmit(filtrarLista)}>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control shadow-none"
+                    placeholder="Título ou autor..."
+                    required
+                    {...register("palavra")}
+                  />
+                  <button className="btn btn-primary" type="submit">
+                    Pesquisar
+                  </button>
+                  <button 
+                    className="btn btn-outline-secondary" 
+                    type="button"
+                    onClick={() => {
+                      reset({ palavra: "" });
+                      obterLista();
+                    }}
+                  >
+                    Todos
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div className="table-responsive">
-        <table className="table table-striped mt-3 table-hover">
-          <thead>
-            <tr>
-              <th className="d-none d-sm-table-cell">Cód.</th>
-              <th>Título</th>
-              <th className="d-none d-md-table-cell">Autor</th>
-              <th className="d-none d-lg-table-cell">Ano</th>
-              <th className="d-none d-md-table-cell">Preço R$</th>
-              <th className="d-none d-lg-table-cell">Foto</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {livros.map((livro, index) => (
-              <ItemLista
-                key={livro.id}
-                id={livro.id}
-                titulo={livro.titulo}
-                autor={livro.autor}
-                ano={livro.ano}
-                preco={livro.preco}
-                foto={livro.foto}
-                excluirClick={() => excluir(livro.id, livro.titulo)}
-                alterarClick={() => alterar(livro.id, livro.titulo, index)}
-              />
-            ))}
-          </tbody>
-        </table>
+        <div className="card-body p-0">
+          <div className="table-responsive">
+            <table className="table table-hover align-middle mb-0">
+              <thead className="table-light">
+                <tr>
+                  <th className="ps-4 py-3" style={{ width: "100px" }}>Capa</th>
+                  <th className="py-3">Título / Autor</th>
+                  <th className="py-3 d-none d-md-table-cell">Ano</th>
+                  <th className="py-3">Preço</th>
+                  <th className="py-3 text-center pe-4">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {livros.map((livro, index) => (
+                  <ItemLista
+                    key={livro.id}
+                    id={livro.id}
+                    titulo={livro.titulo}
+                    autor={livro.autor}
+                    ano={livro.ano}
+                    preco={livro.preco}
+                    foto={livro.foto}
+                    excluirClick={() => excluir(livro.id, livro.titulo)}
+                    alterarClick={() => alterar(livro.id, livro.titulo, index)}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {livros.length === 0 && (
+            <div className="text-center py-5">
+              <p className="text-muted">Nenhum livro encontrado.</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

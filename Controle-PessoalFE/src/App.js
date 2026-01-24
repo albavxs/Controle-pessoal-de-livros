@@ -11,8 +11,8 @@ const App = () => {
       <MenuSuperior />
       <main className="py-4">
         <Routes>
-          <Route path="/" element={<InclusaoLivros />} />
-          <Route path="manut" element={<ManutencaoLivros />} />
+          <Route path="/" element={<ManutencaoLivros />} />
+          <Route path="inclusao" element={<InclusaoLivros />} />
           <Route path="resumo" element={<ResumoLivros />} />
         </Routes>
       </main>
