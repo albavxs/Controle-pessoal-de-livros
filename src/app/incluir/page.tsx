@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { createGoogleBookInput, isLikelyIsbn } from "@/lib/books";
 import { useBooks } from "@/hooks/useBooks";
 import { useLang, t } from "@/lib/i18n";
@@ -13,6 +13,9 @@ import { GoogleBookResultCard } from "@/components/GoogleBookResultCard";
 import { ImportBookModal } from "@/components/ImportBookModal";
 import { Toast } from "@/components/Toast";
 
+const INITIAL_QUERIES_PT = ["programação", "design", "ficção brasileira", "negócios", "ciência"];
+const INITIAL_QUERIES_EN = ["programming", "design", "fiction", "business", "science"];
+
 export default function IncluirPage() {
   const { lang } = useLang();
   const s = t(lang);
@@ -24,9 +27,13 @@ export default function IncluirPage() {
   const [hasSearched, setHasSearched] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<GoogleBookSearchResult[]>([]);
+  const [suggestions, setSuggestions] = useState<GoogleBookSearchResult[]>([]);
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
   const [selectedBook, setSelectedBook] = useState<GoogleBookSearchResult | null>(
     null
   );
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
 
   const [form, setForm] = useState({
     titulo: "",
@@ -44,6 +51,97 @@ export default function IncluirPage() {
     return s.searchFailed;
   }
 
+  // Fetch initial suggestions on mount (client-only to avoid hydration mismatch)
+  useEffect(() => {
+    let cancelled = false;
+    const queries = lang === "pt" ? INITIAL_QUERIES_PT : INITIAL_QUERIES_EN;
+    const randomQuery = queries[Math.floor(Math.random() * queries.length)];
+
+    setLoadingSuggestions(true);
+    fetch(`/api/books/search?q=${encodeURIComponent(randomQuery)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data: GoogleBooksSearchResponse | null) => {
+        if (!cancelled && data?.items) {
+          setSuggestions(data.items);
+        }
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (!cancelled) setLoadingSuggestions(false);
+      });
+
+    return () => { cancelled = true; };
+  }, [lang]);
+
+  const fetchResults = useCallback(
+    async (query: string) => {
+      abortRef.current?.abort();
+      const controller = new AbortController();
+      abortRef.current = controller;
+
+      setIsSearching(true);
+      setHasSearched(true);
+      setSearchError("");
+
+      try {
+        const response = await fetch(
+          `/api/books/search?q=${encodeURIComponent(query)}`,
+          { signal: controller.signal }
+        );
+        const payload: unknown = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          const code =
+            payload &&
+            typeof payload === "object" &&
+            "code" in payload &&
+            typeof payload.code === "string"
+              ? (payload.code as GoogleBooksSearchErrorCode)
+              : undefined;
+
+          setResults([]);
+          setSearchError(getSearchErrorMessage(code));
+          return;
+        }
+
+        const data = payload as GoogleBooksSearchResponse;
+        setResults(Array.isArray(data.items) ? data.items : []);
+      } catch (err) {
+        if ((err as Error).name !== "AbortError") {
+          setResults([]);
+          setSearchError(s.searchFailed);
+        }
+      } finally {
+        setIsSearching(false);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [s]
+  );
+
+  // Auto-search as user types (debounced)
+  useEffect(() => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+
+    const query = searchQuery.trim();
+    if (query.length < 3 && !isLikelyIsbn(query)) {
+      if (!query) {
+        setResults([]);
+        setHasSearched(false);
+        setSearchError("");
+      }
+      return;
+    }
+
+    debounceRef.current = setTimeout(() => {
+      fetchResults(query);
+    }, 400);
+
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, [searchQuery, fetchResults]);
+
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault();
 
@@ -55,38 +153,7 @@ export default function IncluirPage() {
       return;
     }
 
-    setIsSearching(true);
-    setHasSearched(true);
-    setSearchError("");
-
-    try {
-      const response = await fetch(
-        `/api/books/search?q=${encodeURIComponent(query)}`
-      );
-      const payload: unknown = await response.json().catch(() => null);
-
-      if (!response.ok) {
-        const code =
-          payload &&
-          typeof payload === "object" &&
-          "code" in payload &&
-          typeof payload.code === "string"
-            ? (payload.code as GoogleBooksSearchErrorCode)
-            : undefined;
-
-        setResults([]);
-        setSearchError(getSearchErrorMessage(code));
-        return;
-      }
-
-      const data = payload as GoogleBooksSearchResponse;
-      setResults(Array.isArray(data.items) ? data.items : []);
-    } catch {
-      setResults([]);
-      setSearchError(s.searchFailed);
-    } finally {
-      setIsSearching(false);
-    }
+    fetchResults(query);
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -151,7 +218,7 @@ export default function IncluirPage() {
               {s.addHeroDescription}
             </p>
           </div>
-          <div className="rounded-[1.6rem] border border-accent-secondary/18 bg-accent-secondary/10 px-4 py-3">
+          <div className="rounded-[1.6rem] border border-accent-secondary/18 bg-accent-secondary/10 px-4 py-3 transition-all duration-200 hover:border-accent-secondary/30 hover:bg-accent-secondary/16 hover:shadow-[0_18px_36px_-22px_rgba(47,122,109,0.45)] hover:-translate-y-0.5">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent-secondary">
               {s.searchResults}
             </p>
@@ -198,7 +265,14 @@ export default function IncluirPage() {
             <p className="mt-3 text-sm text-[rgb(185,65,51)]">{searchError}</p>
           )}
 
-          {results.length > 0 && (
+          {isSearching && (
+            <div className="mt-6 flex items-center justify-center gap-3 py-8 text-sm text-muted">
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-accent-secondary/30 border-t-accent-secondary" />
+              {s.searching}
+            </div>
+          )}
+
+          {!isSearching && results.length > 0 && (
             <div className="mt-6 space-y-3">
               <h3 className="text-sm font-semibold text-ink">
                 {s.searchResults} ({results.length})
@@ -214,9 +288,32 @@ export default function IncluirPage() {
             </div>
           )}
 
-          {hasSearched && !isSearching && !searchError && results.length === 0 && (
+          {!isSearching && hasSearched && !searchError && results.length === 0 && (
             <div className="mt-6 rounded-[1.6rem] border border-dashed border-border px-4 py-8 text-center text-sm text-muted">
               {s.noSearchResults}
+            </div>
+          )}
+
+          {!hasSearched && !isSearching && suggestions.length > 0 && (
+            <div className="mt-6 space-y-3">
+              <h3 className="text-sm font-semibold text-ink">
+                {s.suggestions}
+              </h3>
+              {suggestions.slice(0, 3).map((book) => (
+                <GoogleBookResultCard
+                  key={book.googleBookId}
+                  book={book}
+                  isDuplicate={hasGoogleBookId(book.googleBookId)}
+                  onImport={setSelectedBook}
+                />
+              ))}
+            </div>
+          )}
+
+          {!hasSearched && loadingSuggestions && (
+            <div className="mt-6 flex items-center justify-center gap-3 py-8 text-sm text-muted">
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-accent-secondary/30 border-t-accent-secondary" />
+              {s.searching}
             </div>
           )}
         </section>

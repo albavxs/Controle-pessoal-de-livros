@@ -48,7 +48,7 @@ export default function ResumoPage() {
               {s.summaryHeroDescription}
             </p>
           </div>
-          <div className="rounded-[1.6rem] border border-accent-tertiary/18 bg-accent-tertiary/12 px-4 py-3">
+          <div className="rounded-[1.6rem] border border-accent-tertiary/18 bg-accent-tertiary/12 px-4 py-3 transition-all duration-200 hover:border-accent-tertiary/30 hover:bg-accent-tertiary/20 hover:shadow-[0_18px_36px_-22px_rgba(211,162,77,0.45)] hover:-translate-y-0.5">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent-tertiary">
               {s.booksByYear}
             </p>

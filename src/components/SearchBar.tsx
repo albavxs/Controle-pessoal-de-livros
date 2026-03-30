@@ -30,7 +30,7 @@ export function SearchBar({
         </div>
 
         {typeof resultCount === "number" && (
-          <span className="inline-flex items-center self-start rounded-full border border-accent/15 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-accent">
+          <span className="inline-flex items-center self-start rounded-full border border-accent/15 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-accent transition-all duration-200 hover:scale-105 hover:bg-accent/16 hover:shadow-[0_10px_22px_-14px_rgba(191,90,54,0.5)]">
             {resultCount}
           </span>
         )}
@@ -53,7 +53,7 @@ export function SearchBar({
           <button
             type="button"
             onClick={() => onChange("")}
-            className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-accent/10 text-accent transition hover:bg-accent/16"
+            className="absolute right-3 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-accent/10 text-accent cursor-pointer transition-all duration-200 hover:bg-accent/16 hover:scale-115 hover:shadow-[0_8px_20px_-10px_rgba(191,90,54,0.5)] active:scale-95"
             aria-label={s.clear}
             title={s.clear}
           >

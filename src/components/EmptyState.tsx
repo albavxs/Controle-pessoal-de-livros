@@ -13,7 +13,7 @@ export function EmptyState() {
     <div className="soft-card section-enter relative overflow-hidden rounded-[2rem] px-6 py-14 text-center sm:px-10">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(191,90,54,0.16),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(47,122,109,0.14),transparent_30%)]" />
       <div className="relative mx-auto flex max-w-xl flex-col items-center">
-        <div className="mb-5 flex h-18 w-18 items-center justify-center rounded-[1.75rem] border border-accent/20 bg-accent/10">
+        <div className="mb-5 flex h-18 w-18 items-center justify-center rounded-[1.75rem] border border-accent/20 bg-accent/10 transition-all duration-300 hover:scale-110 hover:rotate-3 hover:shadow-[0_18px_36px_-20px_rgba(191,90,54,0.6)]">
           <BookIcon className="h-9 w-9 text-accent" />
         </div>
         <p className="text-xs font-semibold uppercase tracking-[0.26em] text-accent">

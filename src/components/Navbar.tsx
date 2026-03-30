@@ -66,9 +66,9 @@ export function Navbar() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
         <Link
           href="/"
-          className="group flex min-w-0 items-center gap-3"
+          className="group flex min-w-0 items-center gap-3 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
         >
-          <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-accent/20 bg-accent/12 text-accent shadow-[0_16px_30px_-24px_rgba(191,90,54,0.85)] transition group-hover:-translate-y-0.5">
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-accent/20 bg-accent/12 text-accent shadow-[0_16px_30px_-24px_rgba(191,90,54,0.85)] transition-all duration-200 group-hover:-translate-y-1 group-hover:shadow-[0_20px_36px_-22px_rgba(191,90,54,1)] group-hover:scale-110">
             <BookIcon className="h-5 w-5" />
           </span>
           <span className="min-w-0">
@@ -86,7 +86,7 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 ${getLinkToneClasses(
+              className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-[220ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-[3px] hover:scale-[1.04] hover:shadow-[0_16px_32px_-22px_rgba(var(--shadow-rgb),0.5)] active:translate-y-[-1px] active:scale-[0.97] ${getLinkToneClasses(
                 link.tone,
                 isActive(link.href)
               )}`}
@@ -105,7 +105,7 @@ export function Navbar() {
           type="button"
           aria-expanded={open}
           aria-label={open ? s.closeMenu : s.menu}
-          className="inline-flex items-center justify-center rounded-full border border-border/80 bg-card/85 p-2.5 text-ink shadow-[0_14px_30px_-26px_rgba(36,25,21,0.8)] transition hover:-translate-y-0.5 md:hidden"
+          className="inline-flex cursor-pointer items-center justify-center rounded-full border border-border/80 bg-card/85 p-2.5 text-ink shadow-[0_14px_30px_-26px_rgba(36,25,21,0.8)] transition-all duration-[220ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-[3px] hover:scale-[1.04] hover:border-[color-mix(in_srgb,var(--accent)_20%,var(--border))] hover:text-accent hover:shadow-[0_16px_32px_-22px_rgba(var(--shadow-rgb),0.5)] active:translate-y-[-1px] active:scale-[0.97] md:hidden"
           onClick={() => setOpen(!open)}
         >
           {open ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
@@ -123,7 +123,7 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className={`flex items-center justify-between rounded-2xl border px-4 py-3 text-sm font-medium transition ${getLinkToneClasses(
+              className={`flex items-center justify-between rounded-2xl border px-4 py-3 text-sm font-medium transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_14px_28px_-18px_rgba(var(--shadow-rgb),0.4)] active:scale-[0.98] ${getLinkToneClasses(
                 link.tone,
                 isActive(link.href)
               )}`}

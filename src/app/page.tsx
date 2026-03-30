@@ -81,7 +81,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2 lg:min-w-[22rem]">
-            <div className="soft-card rounded-[1.7rem] border-accent/18 bg-accent/10 p-5">
+            <div className="soft-card rounded-[1.7rem] border-accent/18 bg-accent/10 p-5 hover:border-accent/30 hover:bg-accent/16 hover:shadow-[0_24px_48px_-28px_rgba(191,90,54,0.55)]">
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
                 {s.totalBooks}
               </p>
@@ -91,7 +91,7 @@ export default function HomePage() {
               <p className="mt-2 text-sm text-muted">{s.summaryCountHint}</p>
             </div>
 
-            <div className="soft-card rounded-[1.7rem] border-accent-secondary/18 bg-accent-secondary/10 p-5">
+            <div className="soft-card rounded-[1.7rem] border-accent-secondary/18 bg-accent-secondary/10 p-5 hover:border-accent-secondary/30 hover:bg-accent-secondary/16 hover:shadow-[0_24px_48px_-28px_rgba(47,122,109,0.5)]">
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent-secondary">
                 {s.totalInvested}
               </p>

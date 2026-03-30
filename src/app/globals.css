@@ -284,11 +284,20 @@ textarea {
 .soft-card,
 .surface-panel {
   transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    box-shadow 180ms ease,
-    background-color 180ms ease;
+    transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background-color 220ms ease;
 }
+
+.soft-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 26px 52px -34px rgba(var(--shadow-rgb), 0.68),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  border-color: color-mix(in srgb, var(--accent) 18%, var(--border));
+}
+
 
 .editorial-input {
   width: 100%;
@@ -329,22 +338,33 @@ textarea {
   color: #fff8f4;
   font-size: 0.95rem;
   font-weight: 600;
+  cursor: pointer;
   box-shadow: 0 18px 32px -24px rgba(191, 90, 54, 0.9);
   transition:
-    transform 180ms ease,
-    opacity 180ms ease,
-    filter 180ms ease;
+    transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 220ms ease,
+    filter 220ms ease;
 }
 
 .editorial-button:hover {
-  transform: translateY(-1px);
-  filter: saturate(1.04);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    0 22px 38px -22px rgba(191, 90, 54, 1),
+    0 0 0 3px rgba(191, 90, 54, 0.12);
+  filter: brightness(1.06) saturate(1.08);
+}
+
+.editorial-button:active {
+  transform: translateY(-1px) scale(0.98);
+  transition-duration: 80ms;
 }
 
 .editorial-button:disabled {
   cursor: not-allowed;
   opacity: 0.68;
   transform: none;
+  box-shadow: 0 18px 32px -24px rgba(191, 90, 54, 0.9);
+  filter: none;
 }
 
 .editorial-button-secondary {
@@ -359,6 +379,33 @@ textarea {
   color: var(--accent-secondary);
   font-size: 0.95rem;
   font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease;
+}
+
+.editorial-button-secondary:hover {
+  transform: translateY(-3px) scale(1.03);
+  background: color-mix(in srgb, var(--accent-secondary) 18%, transparent);
+  border-color: color-mix(in srgb, var(--accent-secondary) 36%, var(--border));
+  box-shadow:
+    0 20px 36px -22px rgba(47, 122, 109, 0.65),
+    0 0 0 3px rgba(47, 122, 109, 0.1);
+}
+
+.editorial-button-secondary:active {
+  transform: translateY(-1px) scale(0.98);
+  transition-duration: 80ms;
+}
+
+.editorial-button-secondary:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+  transform: none;
+  box-shadow: none;
 }
 
 .editorial-button-muted {
@@ -373,10 +420,34 @@ textarea {
   color: var(--ink);
   font-size: 0.95rem;
   font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease;
+}
+
+.editorial-button-muted:hover {
+  transform: translateY(-3px) scale(1.03);
+  background: rgba(255, 255, 255, 0.58);
+  border-color: color-mix(in srgb, var(--border) 100%, transparent);
+  box-shadow:
+    0 18px 34px -22px rgba(var(--shadow-rgb), 0.45),
+    0 0 0 3px rgba(var(--shadow-rgb), 0.06);
+}
+
+.editorial-button-muted:active {
+  transform: translateY(-1px) scale(0.98);
+  transition-duration: 80ms;
 }
 
 :root[data-theme="dark"] .editorial-button-muted {
   background: rgba(255, 255, 255, 0.04);
+}
+
+:root[data-theme="dark"] .editorial-button-muted:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .section-enter {

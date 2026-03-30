@@ -84,7 +84,7 @@ export function GoogleBookResultCard({
             href={book.previewLink}
             target="_blank"
             rel="noreferrer"
-            className="editorial-button-muted flex-1"
+            className="editorial-button-muted flex-1 text-center"
           >
             {s.preview}
           </a>
@@ -93,7 +93,7 @@ export function GoogleBookResultCard({
           type="button"
           onClick={() => onImport(book)}
           disabled={isDuplicate}
-          className="editorial-button-secondary flex-1"
+          className="editorial-button-secondary flex-1 text-center"
         >
           {isDuplicate ? s.alreadyInShelf : s.importBook}
         </button>

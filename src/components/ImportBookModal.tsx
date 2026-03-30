@@ -51,7 +51,7 @@ export function ImportBookModal({
           <button
             type="button"
             onClick={onClose}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/80 bg-surface/90 text-muted transition hover:text-ink"
+            className="inline-flex cursor-pointer h-10 w-10 items-center justify-center rounded-full border border-border/80 bg-surface/90 text-muted transition-all duration-[220ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-[3px] hover:scale-[1.04] hover:text-ink hover:border-[color-mix(in_srgb,var(--accent)_20%,var(--border))] hover:bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] hover:shadow-[0_12px_24px_-14px_rgba(191,90,54,0.4)] active:translate-y-[-1px] active:scale-[0.97]"
           >
             <CloseIcon className="h-4 w-4" />
           </button>

@@ -57,7 +57,7 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       title={s.toggleTheme}
       aria-label={s.toggleTheme}
-      className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-card/85 px-3 py-2 text-sm font-medium text-ink shadow-[0_14px_30px_-26px_rgba(36,25,21,0.8)] transition hover:-translate-y-0.5 hover:border-accent/30 hover:text-accent"
+      className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-border/80 bg-card/85 px-3 py-2 text-sm font-medium text-ink shadow-[0_14px_30px_-26px_rgba(36,25,21,0.8)] transition-all duration-[220ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-[3px] hover:scale-[1.04] hover:border-[color-mix(in_srgb,var(--accent)_30%,var(--border))] hover:text-accent hover:bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] hover:shadow-[0_18px_34px_-22px_rgba(191,90,54,0.55)] active:translate-y-[-1px] active:scale-[0.97]"
     >
       {isLight ? (
         <MoonIcon className="h-4 w-4 text-accent" />

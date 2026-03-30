@@ -37,7 +37,7 @@ export function YearChart({ data }: YearChartProps) {
             {s.booksByYear}
           </h3>
         </div>
-        <span className="inline-flex self-start rounded-full border border-accent-tertiary/20 bg-accent-tertiary/12 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-accent-tertiary">
+        <span className="inline-flex self-start rounded-full border border-accent-tertiary/20 bg-accent-tertiary/12 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-accent-tertiary transition-all duration-200 hover:scale-105 hover:bg-accent-tertiary/20 hover:shadow-[0_10px_22px_-14px_rgba(211,162,77,0.5)]">
           {chartData.length}
         </span>
       </div>
