@@ -1,36 +1,79 @@
 # Minha Estante
 
-Aplicacao Next.js 16 para organizar uma estante pessoal de livros com:
+Minha Estante é uma refatoração do meu projeto anterior **Controle Pessoal Livros**.
 
-- busca e importacao de metadados via Google Books API
-- persistencia local no navegador com migracao automatica para schema `v2`
-- deploy simples na Vercel
+O projeto original foi criado como um exercício prático ao final de um livro, com foco em consolidar aprendizado e colocar em prática os conceitos estudados. Nesta nova versão, a ideia foi evoluir essa base para algo mais sólido, atual e alinhado com princípios e boas práticas de desenvolvimento.
 
-## Como rodar
+A aplicação foi reorganizada com uma estrutura mais moderna, melhor separação de responsabilidades e uma stack mais atual, com destaque para o uso de **Next.js 16**.
+
+## Objetivo da refatoração
+
+Esta versão foi criada para:
+
+- modernizar a stack da aplicação
+- melhorar a organização do código
+- aplicar princípios e boas práticas de desenvolvimento
+- evoluir a experiência de uso sem perder a ideia original do projeto
+
+## O que mudou em relação ao projeto original
+
+Comparado ao Controle Pessoal Livros, esta refatoração traz:
+
+- migração para **Next.js 16** com App Router
+- componentes mais reutilizáveis e responsabilidades melhor definidas
+- integração com a **Google Books API** para importar metadados
+- persistência local com migração automática de schema
+- interface mais trabalhada, responsiva e com suporte a tema
+- base mais preparada para manutenção, evolução e deploy
+
+## Stack atual
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Recharts
+
+## Funcionalidades
+
+- listagem do acervo pessoal
+- busca local por título, autor ou ISBN
+- inclusão manual de livros
+- importação de livros via Google Books
+- edição de preço
+- exclusão de livros
+- resumo com estatísticas da coleção
+- persistência dos dados no navegador
+
+## Como rodar localmente
 
 1. Crie um arquivo `.env.local` a partir de `.env.example`.
 2. Preencha `GOOGLE_BOOKS_API_KEY`.
-3. Instale as dependencias com `npm install`.
+3. Instale as dependências com `npm install`.
 4. Rode `npm run dev`.
 
-Abra [http://localhost:3000](http://localhost:3000).
+Depois, acesse [http://localhost:3000](http://localhost:3000).
 
 ## Fluxo principal
 
-- `/` lista o acervo salvo no `localStorage`
-- `/incluir` busca livros no Google Books, importa um resultado com `preco` manual ou permite cadastro manual
-- `/resumo` calcula estatisticas a partir da estante local
+- `/` exibe o acervo salvo no `localStorage`
+- `/incluir` permite buscar livros no Google Books ou cadastrar manualmente
+- `/resumo` mostra estatísticas da estante
 
 ## Google Books API
 
-A aplicacao usa um Route Handler em `src/app/api/books/search/route.ts` para consultar o Google Books no servidor. Isso evita expor a chave no cliente e padroniza o payload consumido pela interface.
+A busca de livros é feita no servidor por meio do Route Handler em [src/app/api/books/search/route.ts](./src/app/api/books/search/route.ts). Isso evita expor a chave no cliente e padroniza o retorno usado pela interface.
 
-Se `GOOGLE_BOOKS_API_KEY` nao estiver configurada, a busca mostra um erro amigavel no frontend.
+Se `GOOGLE_BOOKS_API_KEY` não estiver configurada corretamente, a busca não funciona.
 
-## Deploy na Vercel
+## Deploy
 
-1. Importe o repositorio na Vercel.
-2. Configure a variavel `GOOGLE_BOOKS_API_KEY` no projeto.
+Para publicar na Vercel:
+
+1. Importe o repositório.
+2. Configure `GOOGLE_BOOKS_API_KEY` nas variáveis de ambiente do projeto.
 3. Rode o deploy.
 
-O app nao depende de banco no v1, entao nenhuma configuracao extra de persistencia e necessaria.
+## Observação
+
+Mesmo sendo uma evolução de um projeto-exercício, esta versão foi pensada como uma refatoração real: mantendo a proposta original, mas trazendo uma implementação mais madura, atual e mais próxima do que se espera em um projeto moderno com boas práticas.

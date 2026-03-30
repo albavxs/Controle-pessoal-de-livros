@@ -1,17 +1,36 @@
 interface StatCardProps {
   label: string;
   value: string;
+  hint?: string;
+  tone?: "accent" | "secondary" | "tertiary" | "neutral";
 }
 
-export function StatCard({ label, value }: StatCardProps) {
+const toneStyles = {
+  accent: "border-accent/18 bg-accent/10 text-accent",
+  secondary:
+    "border-accent-secondary/18 bg-accent-secondary/10 text-accent-secondary",
+  tertiary:
+    "border-accent-tertiary/18 bg-accent-tertiary/12 text-accent-tertiary",
+  neutral: "border-border bg-card text-ink",
+} as const;
+
+export function StatCard({
+  label,
+  value,
+  hint,
+  tone = "neutral",
+}: StatCardProps) {
   return (
-    <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5">
-      <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wide mb-1">
+    <div
+      className={`soft-card rounded-[1.7rem] p-5 sm:p-6 ${toneStyles[tone]}`}
+    >
+      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted">
         {label}
       </p>
-      <p className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+      <p className="mt-3 font-display text-3xl font-semibold leading-none text-ink sm:text-[2.2rem]">
         {value}
       </p>
+      {hint && <p className="mt-3 text-sm text-muted">{hint}</p>}
     </div>
   );
 }

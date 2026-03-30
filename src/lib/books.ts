@@ -26,8 +26,23 @@ export function parsePublishedYear(value: string | null | undefined) {
 }
 
 export function isLikelyIsbn(value: string) {
-  const normalized = value.replace(/[^0-9Xx]/g, "");
+  const normalized = normalizeSearchIsbn(value);
   return ISBN_PATTERN.test(normalized);
+}
+
+export function normalizeSearchText(value: string | null | undefined) {
+  if (typeof value !== "string") return "";
+
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
+export function normalizeSearchIsbn(value: string | null | undefined) {
+  if (typeof value !== "string") return "";
+  return value.toLowerCase().replace(/[^0-9x]/g, "");
 }
 
 export function createBookId() {

@@ -26,31 +26,35 @@ export function EditPriceModal({ book, onSave, onClose }: EditPriceModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-[rgba(16,11,8,0.48)] px-4 pb-0 pt-8 backdrop-blur-sm sm:items-center sm:px-6 sm:pb-6"
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-xl w-full max-w-sm mx-4 p-6"
+        className="sheet-enter w-full max-w-md rounded-t-[2rem] border border-border bg-card px-5 pb-6 pt-5 shadow-[0_32px_70px_-42px_rgba(36,25,21,0.9)] sm:rounded-[2rem] sm:px-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="font-display text-xl font-semibold text-ink">
             {s.editPrice}
           </h2>
           <button
+            type="button"
             onClick={onClose}
-            className="p-1 text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/80 bg-surface/90 text-muted transition hover:text-ink"
           >
-            <CloseIcon className="w-5 h-5" />
+            <CloseIcon className="h-4 w-4" />
           </button>
         </div>
 
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-4">
-          {book.titulo}
-        </p>
+        <div className="rounded-[1.5rem] border border-accent/12 bg-accent/8 px-4 py-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
+            {s.newPrice}
+          </p>
+          <p className="mt-1 text-sm text-muted">{book.titulo}</p>
+        </div>
 
-        <form onSubmit={handleSubmit}>
-          <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
+        <form onSubmit={handleSubmit} className="mt-5">
+          <label className="mb-2 block text-sm font-medium text-ink">
             {s.newPrice} ({s.currency})
           </label>
           <input
@@ -59,20 +63,21 @@ export function EditPriceModal({ book, onSave, onClose }: EditPriceModalProps) {
             min="0"
             value={preco}
             onChange={(e) => setPreco(e.target.value)}
-            className="w-full px-3 py-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-zinc-100/10 focus:border-zinc-400 dark:focus:border-zinc-600"
+            className="editorial-input"
             autoFocus
           />
-          <div className="flex gap-2 mt-4">
+
+          <div className="mt-5 grid gap-2 sm:grid-cols-2">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+              className="editorial-button-muted"
             >
               {s.cancel}
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 text-sm font-medium text-white bg-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
+              className="editorial-button"
             >
               {s.save}
             </button>

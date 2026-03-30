@@ -27,43 +27,61 @@ export function YearChart({ data }: YearChartProps) {
   }));
 
   return (
-    <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5">
-      <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-4">
-        {s.booksByYear}
-      </h3>
-      <div className="h-72">
+    <div className="soft-card section-enter rounded-[2rem] p-5 sm:p-6">
+      <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent-tertiary">
+            {s.summaryHeroEyebrow}
+          </p>
+          <h3 className="mt-2 font-display text-2xl font-semibold text-ink">
+            {s.booksByYear}
+          </h3>
+        </div>
+        <span className="inline-flex self-start rounded-full border border-accent-tertiary/20 bg-accent-tertiary/12 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-accent-tertiary">
+          {chartData.length}
+        </span>
+      </div>
+      <div className="h-72 sm:h-80">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={chartData} margin={{ top: 8, right: 8, left: 0, bottom: 4 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e4e4e7" vertical={false} />
+          <BarChart
+            data={chartData}
+            margin={{ top: 8, right: 8, left: -12, bottom: 4 }}
+          >
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="var(--color-border)"
+              vertical={false}
+            />
             <XAxis
               dataKey="ano"
               type="category"
-              tick={{ fontSize: 12, fill: "#71717a" }}
+              tick={{ fontSize: 12, fill: "var(--color-muted)" }}
               axisLine={false}
               tickLine={false}
             />
             <YAxis
-              tick={{ fontSize: 12, fill: "#71717a" }}
+              tick={{ fontSize: 12, fill: "var(--color-muted)" }}
               axisLine={false}
               tickLine={false}
               allowDecimals={false}
-              width={30}
+              width={26}
             />
             <Tooltip
               contentStyle={{
-                background: "#18181b",
-                border: "none",
-                borderRadius: "8px",
-                color: "#fafafa",
+                background: "var(--color-card)",
+                border: "1px solid var(--color-border)",
+                borderRadius: "18px",
+                color: "var(--color-ink)",
                 fontSize: "13px",
+                boxShadow: "0 22px 45px -32px rgba(36,25,21,0.85)",
               }}
-              cursor={{ fill: "rgba(0,0,0,0.04)" }}
+              cursor={{ fill: "rgba(211,162,77,0.12)" }}
             />
             <Bar
               dataKey="quantidade"
-              fill="#3f3f46"
-              radius={[4, 4, 0, 0]}
-              maxBarSize={56}
+              fill="var(--color-accent-tertiary)"
+              radius={[10, 10, 0, 0]}
+              maxBarSize={52}
             />
           </BarChart>
         </ResponsiveContainer>

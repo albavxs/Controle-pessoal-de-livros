@@ -10,23 +10,26 @@ export function EmptyState() {
   const s = t(lang);
 
   return (
-    <div className="flex flex-col items-center justify-center py-20 text-center">
-      <div className="w-16 h-16 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mb-4">
-        <BookIcon className="w-8 h-8 text-zinc-400" />
+    <div className="soft-card section-enter relative overflow-hidden rounded-[2rem] px-6 py-14 text-center sm:px-10">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(191,90,54,0.16),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(47,122,109,0.14),transparent_30%)]" />
+      <div className="relative mx-auto flex max-w-xl flex-col items-center">
+        <div className="mb-5 flex h-18 w-18 items-center justify-center rounded-[1.75rem] border border-accent/20 bg-accent/10">
+          <BookIcon className="h-9 w-9 text-accent" />
+        </div>
+        <p className="text-xs font-semibold uppercase tracking-[0.26em] text-accent">
+          {s.home}
+        </p>
+        <h3 className="mt-3 font-display text-2xl font-semibold text-ink sm:text-3xl">
+          {s.noBooks}
+        </h3>
+        <p className="mt-3 max-w-md text-sm leading-6 text-muted sm:text-base">
+          {s.noBooksDesc}
+        </p>
+        <Link href="/incluir" className="editorial-button mt-7">
+          <PlusIcon className="h-4 w-4" />
+          {s.addFirst}
+        </Link>
       </div>
-      <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-1">
-        {s.noBooks}
-      </h3>
-      <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6 max-w-xs">
-        {s.noBooksDesc}
-      </p>
-      <Link
-        href="/incluir"
-        className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-sm font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
-      >
-        <PlusIcon className="w-4 h-4" />
-        {s.addFirst}
-      </Link>
     </div>
   );
 }

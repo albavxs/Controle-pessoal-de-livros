@@ -6,6 +6,7 @@ import {
   parsePublishedYear,
 } from "./books";
 import { legacySeedBooks, seedBooks } from "./seed-data";
+import { DEFAULT_THEME, isTheme, THEME_STORAGE_KEY, Theme } from "./theme";
 
 const STORAGE_KEY = "minha-estante-livros";
 const STORAGE_VERSION = 2;
@@ -204,4 +205,16 @@ export function getLang(): "pt" | "en" {
 export function saveLang(lang: "pt" | "en"): void {
   if (!isBrowser()) return;
   localStorage.setItem(LANG_KEY, lang);
+}
+
+export function getTheme(): Theme {
+  if (!isBrowser()) return DEFAULT_THEME;
+
+  const stored = localStorage.getItem(THEME_STORAGE_KEY);
+  return isTheme(stored) ? stored : DEFAULT_THEME;
+}
+
+export function saveTheme(theme: Theme): void {
+  if (!isBrowser()) return;
+  localStorage.setItem(THEME_STORAGE_KEY, theme);
 }

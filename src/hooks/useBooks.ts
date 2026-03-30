@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { createBook } from "@/lib/books";
+import { createBook, normalizeSearchIsbn, normalizeSearchText } from "@/lib/books";
 import { getBooks, saveBooks } from "@/lib/storage";
 import { Book, CreateBookInput } from "@/types/book";
 
@@ -70,13 +70,18 @@ export function useBooks() {
     (query: string) => {
       if (!query.trim()) return books;
 
-      const q = query.toLowerCase();
+      const normalizedQuery = normalizeSearchText(query);
+      const normalizedIsbnQuery = normalizeSearchIsbn(query);
+
       return books.filter((b) => {
-        const isbn = b.isbn?.toLowerCase() ?? "";
+        const title = normalizeSearchText(b.titulo);
+        const author = normalizeSearchText(b.autor);
+        const isbn = normalizeSearchIsbn(b.isbn);
+
         return (
-          b.titulo.toLowerCase().includes(q) ||
-          b.autor.toLowerCase().includes(q) ||
-          isbn.includes(q)
+          title.includes(normalizedQuery) ||
+          author.includes(normalizedQuery) ||
+          (normalizedIsbnQuery.length > 0 && isbn.includes(normalizedIsbnQuery))
         );
       });
     },

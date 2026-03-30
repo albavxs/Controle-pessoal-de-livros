@@ -36,8 +36,7 @@ export default function IncluirPage() {
     preco: "",
   });
 
-  const inputClass =
-    "w-full px-3 py-2.5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-sm text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-zinc-100/10 focus:border-zinc-400 dark:focus:border-zinc-600 transition-colors";
+  const inputClass = "editorial-input";
 
   function getSearchErrorMessage(code?: GoogleBooksSearchErrorCode) {
     if (code === "MISSING_API_KEY") return s.searchNeedsApiKey;
@@ -138,28 +137,47 @@ export default function IncluirPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-          {s.add}
-        </h1>
-        <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-          {s.googleSearchDescription}
+    <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8">
+      <section className="surface-panel section-enter overflow-hidden rounded-[2.2rem] px-5 py-6 sm:px-8 sm:py-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-accent-secondary">
+          {s.addHeroEyebrow}
         </p>
-      </div>
+        <div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-3xl">
+            <h1 className="font-display text-3xl font-semibold leading-tight text-ink sm:text-4xl lg:text-5xl">
+              {s.addHeroTitle}
+            </h1>
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-muted sm:text-base">
+              {s.addHeroDescription}
+            </p>
+          </div>
+          <div className="rounded-[1.6rem] border border-accent-secondary/18 bg-accent-secondary/10 px-4 py-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent-secondary">
+              {s.searchResults}
+            </p>
+            <p className="mt-1 text-sm text-muted">{results.length}</p>
+          </div>
+        </div>
+      </section>
 
-      <div className="grid gap-6 xl:grid-cols-[1.3fr_0.9fr]">
-        <section className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
+      <div className="grid gap-6 xl:grid-cols-[1.35fr_0.95fr]">
+        <section className="soft-card section-enter rounded-[2rem] p-5 sm:p-6">
           <div className="mb-4">
-            <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent-secondary">
+              {s.googleSearchTitle}
+            </p>
+            <h2 className="mt-2 font-display text-2xl font-semibold text-ink">
               {s.googleSearchTitle}
             </h2>
-            <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+            <p className="mt-2 text-sm leading-6 text-muted">
               {s.googleSearchDescription}
             </p>
           </div>
 
-          <form onSubmit={handleSearch} className="flex flex-col gap-3 sm:flex-row">
+          <form
+            onSubmit={handleSearch}
+            className="flex flex-col gap-3 rounded-[1.7rem] border border-accent-secondary/14 bg-accent-secondary/8 p-4 sm:flex-row"
+          >
             <input
               type="text"
               value={searchQuery}
@@ -170,22 +188,20 @@ export default function IncluirPage() {
             <button
               type="submit"
               disabled={isSearching}
-              className="px-4 py-2.5 text-sm font-medium text-white bg-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+              className="editorial-button-secondary min-w-[9rem]"
             >
               {isSearching ? s.searching : s.searchGoogleBooks}
             </button>
           </form>
 
           {searchError && (
-            <p className="mt-3 text-sm text-red-600 dark:text-red-400">
-              {searchError}
-            </p>
+            <p className="mt-3 text-sm text-[rgb(185,65,51)]">{searchError}</p>
           )}
 
           {results.length > 0 && (
             <div className="mt-6 space-y-3">
-              <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-                {s.searchResults}
+              <h3 className="text-sm font-semibold text-ink">
+                {s.searchResults} ({results.length})
               </h3>
               {results.map((book) => (
                 <GoogleBookResultCard
@@ -199,25 +215,28 @@ export default function IncluirPage() {
           )}
 
           {hasSearched && !isSearching && !searchError && results.length === 0 && (
-            <div className="mt-6 rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 px-4 py-6 text-sm text-zinc-500 dark:text-zinc-400 text-center">
+            <div className="mt-6 rounded-[1.6rem] border border-dashed border-border px-4 py-8 text-center text-sm text-muted">
               {s.noSearchResults}
             </div>
           )}
         </section>
 
-        <section className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
+        <section className="soft-card section-enter rounded-[2rem] p-5 sm:p-6">
           <div className="mb-4">
-            <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">
+              {s.manualAddTitle}
+            </p>
+            <h2 className="mt-2 font-display text-2xl font-semibold text-ink">
               {s.manualAddTitle}
             </h2>
-            <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+            <p className="mt-2 text-sm leading-6 text-muted">
               {s.manualAddDescription}
             </p>
           </div>
 
           <form onSubmit={handleSubmitManual} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
+              <label className="mb-1.5 block text-sm font-medium text-ink">
                 {s.title}
               </label>
               <input
@@ -231,7 +250,7 @@ export default function IncluirPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
+              <label className="mb-1.5 block text-sm font-medium text-ink">
                 {s.author}
               </label>
               <input
@@ -245,7 +264,7 @@ export default function IncluirPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
+              <label className="mb-1.5 block text-sm font-medium text-ink">
                 {s.coverUrl}
               </label>
               <input
@@ -258,9 +277,9 @@ export default function IncluirPage() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
+                <label className="mb-1.5 block text-sm font-medium text-ink">
                   {s.year}
                 </label>
                 <input
@@ -274,7 +293,7 @@ export default function IncluirPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
+                <label className="mb-1.5 block text-sm font-medium text-ink">
                   {s.pricePaid} ({s.currency})
                 </label>
                 <input
@@ -290,16 +309,11 @@ export default function IncluirPage() {
             </div>
 
             {manualError && (
-              <p className="text-sm text-red-600 dark:text-red-400">
-                {manualError}
-              </p>
+              <p className="text-sm text-[rgb(185,65,51)]">{manualError}</p>
             )}
 
-            <div className="flex gap-3 pt-2">
-              <button
-                type="submit"
-                className="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
-              >
+            <div className="grid gap-2 pt-2 sm:grid-cols-2">
+              <button type="submit" className="editorial-button">
                 {s.save}
               </button>
               <button
@@ -308,7 +322,7 @@ export default function IncluirPage() {
                   setForm({ titulo: "", autor: "", foto: "", ano: "", preco: "" });
                   setManualError("");
                 }}
-                className="px-4 py-2.5 text-sm font-medium text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+                className="editorial-button-muted"
               >
                 {s.clear}
               </button>

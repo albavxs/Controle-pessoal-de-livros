@@ -10,6 +10,25 @@ import { ChartIcon } from "./icons/ChartIcon";
 import { MenuIcon } from "./icons/MenuIcon";
 import { CloseIcon } from "./icons/CloseIcon";
 import { LanguageToggle } from "./LanguageToggle";
+import { ThemeToggle } from "./ThemeToggle";
+
+type NavTone = "accent" | "accent-secondary" | "accent-tertiary";
+
+function getLinkToneClasses(tone: NavTone, active: boolean) {
+  if (!active) {
+    return "border-transparent text-muted hover:border-border hover:bg-card/85 hover:text-ink";
+  }
+
+  if (tone === "accent-secondary") {
+    return "border-accent-secondary/20 bg-accent-secondary/12 text-accent-secondary shadow-[0_18px_34px_-26px_rgba(47,122,109,0.9)]";
+  }
+
+  if (tone === "accent-tertiary") {
+    return "border-accent-tertiary/20 bg-accent-tertiary/16 text-accent-tertiary shadow-[0_18px_34px_-26px_rgba(211,162,77,0.85)]";
+  }
+
+  return "border-accent/20 bg-accent/12 text-accent shadow-[0_18px_34px_-26px_rgba(191,90,54,0.95)]";
+}
 
 export function Navbar() {
   const { lang } = useLang();
@@ -18,12 +37,23 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   const links = [
-    { href: "/", label: s.home, icon: <BookIcon className="w-4 h-4" /> },
-    { href: "/incluir", label: s.add, icon: <PlusIcon className="w-4 h-4" /> },
+    {
+      href: "/",
+      label: s.home,
+      icon: <BookIcon className="h-4 w-4" />,
+      tone: "accent" as const,
+    },
+    {
+      href: "/incluir",
+      label: s.add,
+      icon: <PlusIcon className="h-4 w-4" />,
+      tone: "accent-secondary" as const,
+    },
     {
       href: "/resumo",
       label: s.summary,
-      icon: <ChartIcon className="w-4 h-4" />,
+      icon: <ChartIcon className="h-4 w-4" />,
+      tone: "accent-tertiary" as const,
     },
   ];
 
@@ -31,68 +61,89 @@ export function Navbar() {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
   }
-
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800">
-      <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+    <nav className="sticky top-0 z-50 border-b border-border/80 bg-surface/78 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
         <Link
           href="/"
-          className="flex items-center gap-2 text-zinc-900 dark:text-zinc-100 font-semibold text-lg tracking-tight"
+          className="group flex min-w-0 items-center gap-3"
         >
-          <BookIcon className="w-6 h-6" />
-          <span className="hidden sm:inline">{s.appName}</span>
+          <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-accent/20 bg-accent/12 text-accent shadow-[0_16px_30px_-24px_rgba(191,90,54,0.85)] transition group-hover:-translate-y-0.5">
+            <BookIcon className="h-5 w-5" />
+          </span>
+          <span className="min-w-0">
+            <span className="block truncate font-display text-lg font-semibold text-ink sm:text-xl">
+              {s.appName}
+            </span>
+            <span className="hidden truncate text-xs text-muted sm:block">
+              {s.appTagline}
+            </span>
+          </span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden items-center gap-2 md:flex">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+              className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5 ${getLinkToneClasses(
+                link.tone,
                 isActive(link.href)
-                  ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-                  : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-800"
-              }`}
+              )}`}
             >
               {link.icon}
               {link.label}
             </Link>
           ))}
-          <div className="ml-2 pl-2 border-l border-zinc-200 dark:border-zinc-700">
+          <div className="ml-2 flex items-center gap-2 pl-2">
             <LanguageToggle />
+            <ThemeToggle />
           </div>
         </div>
 
         <button
-          className="md:hidden p-2 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+          type="button"
+          aria-expanded={open}
+          aria-label={open ? s.closeMenu : s.menu}
+          className="inline-flex items-center justify-center rounded-full border border-border/80 bg-card/85 p-2.5 text-ink shadow-[0_14px_30px_-26px_rgba(36,25,21,0.8)] transition hover:-translate-y-0.5 md:hidden"
           onClick={() => setOpen(!open)}
         >
-          {open ? <CloseIcon /> : <MenuIcon />}
+          {open ? <CloseIcon className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
         </button>
       </div>
 
-      {open && (
-        <div className="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-4 pb-3">
+      <div
+        className={`overflow-hidden border-t border-border/70 transition-[max-height,opacity] duration-200 md:hidden ${
+          open ? "max-h-[24rem] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="menu-enter mx-4 my-3 space-y-3 rounded-[1.75rem] border border-border/80 bg-card/88 p-4 shadow-[0_24px_52px_-36px_rgba(36,25,21,0.75)] sm:mx-6">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className={`flex items-center gap-2 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
+              className={`flex items-center justify-between rounded-2xl border px-4 py-3 text-sm font-medium transition ${getLinkToneClasses(
+                link.tone,
                 isActive(link.href)
-                  ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-                  : "text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
-              }`}
+              )}`}
             >
-              {link.icon}
-              {link.label}
+              <span className="flex items-center gap-3">
+                {link.icon}
+                {link.label}
+              </span>
+              <span className="text-xs uppercase tracking-[0.22em] text-muted">
+                {link.href === "/" ? "01" : link.href === "/incluir" ? "02" : "03"}
+              </span>
             </Link>
           ))}
-          <div className="mt-2 pt-2 border-t border-zinc-200 dark:border-zinc-700">
+
+          <div className="grid grid-cols-2 gap-2 border-t border-border/70 pt-3">
             <LanguageToggle />
+            <ThemeToggle />
           </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 }

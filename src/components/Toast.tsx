@@ -21,11 +21,14 @@ export function Toast({ message, onClose }: ToastProps) {
 
   return (
     <div
-      className={`fixed bottom-6 right-6 z-50 px-4 py-3 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-sm font-medium rounded-lg shadow-lg transition-all duration-200 ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+      className={`fixed bottom-4 left-4 right-4 z-50 rounded-[1.4rem] border border-accent/18 bg-card/94 px-4 py-3 text-sm font-medium text-ink shadow-[0_28px_60px_-36px_rgba(36,25,21,0.9)] transition-all duration-200 sm:left-auto sm:right-6 sm:max-w-sm ${
+        visible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
       }`}
     >
-      {message}
+      <div className="flex items-center gap-3">
+        <span className="h-2.5 w-2.5 rounded-full bg-accent" />
+        <span>{message}</span>
+      </div>
     </div>
   );
 }

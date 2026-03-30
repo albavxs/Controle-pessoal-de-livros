@@ -37,48 +37,64 @@ export function ImportBookModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-[rgba(16,11,8,0.48)] px-4 pb-0 pt-8 backdrop-blur-sm sm:items-center sm:px-6 sm:pb-6"
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-xl w-full max-w-md mx-4 p-6"
+        className="sheet-enter w-full max-w-lg rounded-t-[2rem] border border-border bg-card px-5 pb-6 pt-5 shadow-[0_32px_70px_-42px_rgba(36,25,21,0.9)] sm:rounded-[2rem] sm:px-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="font-display text-xl font-semibold text-ink">
             {s.importBook}
           </h2>
           <button
+            type="button"
             onClick={onClose}
-            className="p-1 text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/80 bg-surface/90 text-muted transition hover:text-ink"
           >
-            <CloseIcon className="w-5 h-5" />
+            <CloseIcon className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="flex gap-4 mb-4">
-          <div className="w-16 h-24 flex-shrink-0 overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-800">
+        <div className="mb-5 flex gap-4 rounded-[1.6rem] border border-accent-secondary/14 bg-accent-secondary/8 p-4">
+          <div className="h-24 w-17 flex-shrink-0 overflow-hidden rounded-[1rem] border border-border/80 bg-surface">
             {book.thumbnail ? (
               <img
                 src={book.thumbnail}
                 alt={book.title}
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
               />
             ) : null}
           </div>
 
-          <div className="min-w-0">
-            <p className="font-medium text-zinc-900 dark:text-zinc-100">
+          <div className="min-w-0 flex-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent-secondary">
+              {s.sourceGoogle}
+            </p>
+            <p className="mt-1 font-display text-lg font-semibold text-ink">
               {book.title}
             </p>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+            <p className="mt-1 text-sm text-muted">
               {book.authors.length > 0 ? book.authors.join(", ") : s.unknownAuthor}
             </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {book.year && (
+                <span className="rounded-full border border-border/80 bg-card px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-muted">
+                  {book.year}
+                </span>
+              )}
+              {book.isbn13 && (
+                <span className="rounded-full border border-border/80 bg-card px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-muted">
+                  {s.isbn} {book.isbn13}
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
         <form onSubmit={handleSubmit}>
-          <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
+          <label className="mb-2 block text-sm font-medium text-ink">
             {s.pricePaid} ({s.currency})
           </label>
           <input
@@ -87,27 +103,27 @@ export function ImportBookModal({
             min="0"
             value={preco}
             onChange={(e) => setPreco(e.target.value)}
-            className="w-full px-3 py-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-zinc-100/10 focus:border-zinc-400 dark:focus:border-zinc-600"
+            className="editorial-input"
             autoFocus
           />
 
           {error && (
-            <p className="mt-2 text-sm text-red-600 dark:text-red-400">
+            <p className="mt-2 text-sm text-[rgb(185,65,51)]">
               {error}
             </p>
           )}
 
-          <div className="flex gap-2 mt-4">
+          <div className="mt-5 grid gap-2 sm:grid-cols-2">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+              className="editorial-button-muted"
             >
               {s.cancel}
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 text-sm font-medium text-white bg-zinc-900 dark:bg-zinc-100 dark:text-zinc-900 rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
+              className="editorial-button-secondary"
             >
               {s.save}
             </button>
