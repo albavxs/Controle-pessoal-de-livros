@@ -57,6 +57,7 @@ export default function IncluirPage() {
     const queries = lang === "pt" ? INITIAL_QUERIES_PT : INITIAL_QUERIES_EN;
     const randomQuery = queries[Math.floor(Math.random() * queries.length)];
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reinitializes loading when locale changes.
     setLoadingSuggestions(true);
     fetch(`/api/books/search?q=${encodeURIComponent(randomQuery)}`)
       .then((r) => (r.ok ? r.json() : null))
@@ -126,6 +127,7 @@ export default function IncluirPage() {
     const query = searchQuery.trim();
     if (query.length < 3 && !isLikelyIsbn(query)) {
       if (!query) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- clear stale results when the search is reset.
         setResults([]);
         setHasSearched(false);
         setSearchError("");
